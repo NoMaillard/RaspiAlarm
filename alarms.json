@@ -1,0 +1,11 @@
+{
+    "alarms" : [
+        {
+            "name": "Reveil",
+            "time": {
+                "hours" : "1",
+                "minutes": "20"
+            }
+        }
+    ]
+}
