@@ -73,7 +73,6 @@ Alarm.prototype.deleteAlarm = function (name) {
 
 Alarm.prototype.check = function () {
     var self = this;
-    console.log(this);
     setInterval(function () {
         now = new Date();
         for (alarm of self.alarms) {
