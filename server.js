@@ -4,18 +4,18 @@ var express        = require('express');
 var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
-app.alarm          = require('./alarm');
+var alarm          = require('./alarm');
 var server         = require('http').createServer(app);
 var io             = require('socket.io')(server);
 
 io.on('connection', function (socket) {
-    socket.on('stop', function ()
-        app.alarm.stop();
+    socket.on('stop', function () {
+        alarm.stop();
         console.log('stop');
     });
 
     socket.on('start', function () {
-        app.alarm.ring();
+        alarm.ring();
         console.log('start');
     })
 });
