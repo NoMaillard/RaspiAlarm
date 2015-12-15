@@ -2,7 +2,21 @@ var express        = require('express');
 var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
-app.alarm          = require('./alarm');
+alarm              = require('./alarm');
+var server         = require('http').createServer(app);
+var io             = require('socket.io')(server);
+
+io.on('connection', function (socket) {
+    socket.on('stop', function ()
+        alarm.stop();
+        console.log('stop');
+    });
+
+    socket.on('start', function () {
+        alarm.ring();
+        console.log('start');
+    })
+});
 
 console.log(app.alarm);
 
@@ -19,6 +33,6 @@ app.use(express.static(__dirname + '/public'));
 
 require('./app/routes')(app);
 
-app.listen(port);
+server.listen(port);
 console.log('Magic happens on port ' + port); 			// shoutout to the user
 exports = module.exports = app;

@@ -87,11 +87,13 @@ Alarm.prototype.check = function () {
 };
 
 Alarm.prototype.stop = function () {
-    this.emit('stop');
+    if (alarm.player) {
+        alarm.player.kill();
+    }
 };
 
 Alarm.prototype.ring = function () {
-    this.emit('ring');
+    alarm.player = exec('mplayer song.mp3');
 };
 
 /**
@@ -135,18 +137,7 @@ function validate_dow(dow) {
 
 var alarm = new Alarm();
 // this is the alarm checker, runs indefinately
-alarm.on('ring', function () {
-    if (alarm.canPlay) {
-        alarm.player = exec('mplayer song.mp3');
-        alarm.canPlay = false;
-    }
-}).on('stop', function () {
-    if (alarm.player) {
-        alarm.player.kill();
-        alarm.canPlay = true;
-    }
-
-}).check();
+alarm.check();
 
 alarm.addAlarm("wake", 7, 00, ['weekdays']);
 alarm.addAlarm("wake", 7, 05, ['weekdays']);

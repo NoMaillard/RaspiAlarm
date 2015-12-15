@@ -2,16 +2,17 @@
 var app = angular.module('alarmClock', ['ngMaterial']);
 
 app.controller('appCtrl', ['$scope', '$mdSidenav', '$http', function($scope, $mdSidenav, $http){
+    var socket = io();
     $scope.toggleSidenav = function(menuId) {
         $mdSidenav(menuId).toggle();
     };
 
     $scope.stopAlarm = function () {
-        $http.post('/stop');
+        socket.emit('stop');
     }
 
     $scope.startAlarm = function () {
-        $http.post('/start');
+        socket.emit('start');
     }
 
 }]);
